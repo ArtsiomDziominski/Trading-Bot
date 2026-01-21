@@ -38,5 +38,8 @@ export default defineNuxtConfig({
       crawlLinks: true,
       routes: []
     }
-  }
+  },
+  plugins: [
+    '~/plugins/auth.server.ts'
+  ]
 })

@@ -28,8 +28,36 @@
           />
         </div>
         <div class="flex gap-2">
-          <button class="px-4 py-2 text-sm font-bold text-white hover:text-primary transition-colors">Login</button>
-          <button class="hover:bg-primary/90 bg-primary/20 px-5 py-2 rounded-xl text-sm font-bold text-white transition-all shadow-lg">Sign Up</button>
+          <!-- Authenticated user -->
+          <div v-if="authStore.isAuthenticated" class="flex items-center gap-3">
+            <NuxtLink to="/dashboard" class="text-white/70 hover:text-white text-sm font-medium transition-colors">
+              Dashboard
+            </NuxtLink>
+            <div class="flex items-center gap-2">
+              <button
+                @click="handleLogout"
+                class="px-4 py-2 text-sm font-bold text-white hover:text-red-400 transition-colors"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+
+          <!-- Unauthenticated user -->
+          <div v-else class="flex gap-2">
+            <NuxtLink
+              to="/auth/login"
+              class="px-4 py-2 text-sm font-bold text-white hover:text-primary transition-colors"
+            >
+              Login
+            </NuxtLink>
+            <NuxtLink
+              to="/auth/register"
+              class="hover:bg-primary/90 bg-primary/20 px-5 py-2 rounded-xl text-sm font-bold text-white transition-all shadow-lg"
+            >
+              Sign Up
+            </NuxtLink>
+          </div>
         </div>
       </div>
     </div>
@@ -37,5 +65,11 @@
 </template>
 
 <script setup lang="ts">
+const authStore = useAuthStore()
 const searchQuery = ref('')
+
+const handleLogout = () => {
+  authStore.logout()
+  navigateTo('/')
+}
 </script>
