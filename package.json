@@ -9,17 +9,17 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
-  "devDependencies": {
-    "@nuxt/devtools": "latest",
-    "@nuxtjs/tailwindcss": "^6.12.1",
-    "@types/node": "^20.14.10",
-    "nuxt": "^3.13.0",
-    "sass": "^1.77.8",
-    "typescript": "^5.5.3"
-  },
   "dependencies": {
-    "@nuxt/ui": "^2.18.4",
-    "@pinia/nuxt": "^0.5.5",
-    "pinia": "^2.2.2"
+    "@mdi/font": "^7.4.47",
+    "@nuxt/icon": "^2.1.0",
+    "@nuxt/ui": "^4.3.0",
+    "@nuxtjs/i18n": "^10.2.1",
+    "@pinia/nuxt": "^0.11.3",
+    "nuxt": "^4.2.2",
+    "pinia": "^3.0.4",
+    "socket.io-client": "^4.8.1",
+    "vue": "^3.5.27",
+    "vue-router": "^4.6.3",
+    "zod": "^4.1.13"
   }
 }
