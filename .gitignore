@@ -1,0 +1,17 @@
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+
+node_modules
+
+logs
+*.log
+
+.env
+.env.*
+!.env.example
+
+package-lock.json

@@ -1,0 +1,22 @@
+// Основные стили приложения
+@use "tailwindcss/base";
+@use "tailwindcss/components";
+@use "tailwindcss/utilities";
+
+// Переменные
+:root {
+  --primary-color: #3b82f6;
+  --secondary-color: #64748b;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+}
+
+// Глобальные стили
+html {
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  @apply bg-gray-50 text-gray-900;
+}
