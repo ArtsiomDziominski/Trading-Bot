@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { apiClient, type LoginRequest, type RegisterRequest, type User } from '~/utils/api'
+import { useNotifications } from '~/composables/useNotifications'
 
 export const useAuthStore = defineStore('auth', () => {
     // State
@@ -38,14 +39,30 @@ export const useAuthStore = defineStore('auth', () => {
         isLoading.value = true
         error.value = null
 
+        const { handleSystemNotification } = useNotifications()
+
         try {
             const response = await apiClient.auth.login(credentials)
             token.value = response.access_token
             tokenCookie.value = response.access_token
             user.value = await apiClient.auth.getCurrentUser()
+
+            handleSystemNotification({
+                title: 'Вход выполнен',
+                description: 'Добро пожаловать!',
+                color: 'success'
+            })
+
             return { success: true }
         } catch (err) {
             error.value = err instanceof Error ? err.message : 'Login failed'
+
+            handleSystemNotification({
+                title: 'Ошибка входа',
+                description: error.value || 'Произошла ошибка при входе',
+                color: 'error'
+            })
+
             return { success: false, error: error.value }
         } finally {
             isLoading.value = false
