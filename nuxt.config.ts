@@ -1,4 +1,22 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+const siteConfigFile = process.env.NUXT_SITE_CONFIG || 'botinex'
+let siteConfig: {
+    name: string,
+    url: string,
+    logo: string,
+    description: string,
+    keywords: [],
+    locales: { code: string, iso: string, file: string, name: string }[],
+    defaultLocale: string
+} | null = null
+
+try {
+    siteConfig = require(`./app/config/site/${siteConfigFile}`).default
+} catch (error) {
+    console.warn(`Site config file "${siteConfigFile}" not found, falling back to "babysitters"`)
+    siteConfig = require('./app/config/site/babysitters').default
+}
+
 export default defineNuxtConfig({
   compatibilityDate: '2026-01-21',
   devtools: { enabled: true },
@@ -37,6 +55,11 @@ export default defineNuxtConfig({
     prerender: {
       crawlLinks: true,
       routes: []
+    }
+  },
+  runtimeConfig: {
+    public: {
+      apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL
     }
   },
   plugins: [

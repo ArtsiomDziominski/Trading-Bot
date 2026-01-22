@@ -19,8 +19,13 @@ export class ApiError extends Error {
 export class BaseApiClient {
   protected baseUrl: string
 
-  constructor(baseUrl = 'http://localhost:8000/api') {
-    this.baseUrl = baseUrl
+  constructor(baseUrl?: string) {
+    if (baseUrl) {
+      this.baseUrl = baseUrl
+    } else {
+      const config = useRuntimeConfig()
+      this.baseUrl = config.public.apiBaseUrl
+    }
   }
 
   protected async request<T>(
