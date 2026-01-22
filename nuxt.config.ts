@@ -11,10 +11,10 @@ let siteConfig: {
 } | null = null
 
 try {
-    siteConfig = require(`./app/config/site/${siteConfigFile}`).default
+    siteConfig = require(`./config/site/${siteConfigFile}`).default
 } catch (error) {
     console.warn(`Site config file "${siteConfigFile}" not found, falling back to "babysitters"`)
-    siteConfig = require('./app/config/site/babysitters').default
+    siteConfig = require('./config/site/babysitters').default
 }
 
 export default defineNuxtConfig({

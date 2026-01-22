@@ -23,11 +23,10 @@ export const useAuthStore = defineStore('auth', () => {
     // Actions
     const initializeAuth = async () => {
         const savedToken = tokenCookie.value
-
         if (savedToken) {
             token.value = savedToken
             try {
-                const response = await apiClient.auth.getCurrentUser(savedToken)
+                const response = await apiClient.auth.getCurrentUser()
                 setUser(response)
             } catch (error) {
                 logout()
@@ -43,8 +42,7 @@ export const useAuthStore = defineStore('auth', () => {
             const response = await apiClient.auth.login(credentials)
             token.value = response.access_token
             tokenCookie.value = response.access_token
-            user.value = await apiClient.auth.getCurrentUser(response.access_token)
-
+            user.value = await apiClient.auth.getCurrentUser()
             return { success: true }
         } catch (err) {
             error.value = err instanceof Error ? err.message : 'Login failed'

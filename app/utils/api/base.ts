@@ -19,12 +19,12 @@ export class ApiError extends Error {
 export class BaseApiClient {
   protected baseUrl: string
 
-  constructor(baseUrl?: string) {
-    if (baseUrl) {
-      this.baseUrl = baseUrl
-    } else {
+  constructor() {
+    try {
       const config = useRuntimeConfig()
       this.baseUrl = config.public.apiBaseUrl
+    } catch {
+      this.baseUrl = process.env.NUXT_PUBLIC_API_BASE_URL || ''
     }
   }
 
@@ -58,11 +58,15 @@ export class BaseApiClient {
 
   protected getAuthHeaders(): Record<string, string> {
     const headers: Record<string, string> = {}
-    const token = useState<string | null>('auth-token', () => null)
 
-    if (token.value) {
-      headers['Authorization'] = `Bearer ${token.value}`
-    }
+      const authStore = useAuthStore()
+      const token = authStore.token
+
+      if (token) headers['Authorization'] = `Bearer ${token}`
+      else {
+          const tokenCookie = useCookie<string | null>('auth_token')
+          if (tokenCookie.value) headers['Authorization'] = `Bearer ${tokenCookie.value}`
+      }
 
     return headers
   }
