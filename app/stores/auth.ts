@@ -73,11 +73,27 @@ export const useAuthStore = defineStore('auth', () => {
         isLoading.value = true
         error.value = null
 
+        const { handleSystemNotification } = useNotifications()
+
         try {
             await apiClient.auth.register(userData)
+
+            handleSystemNotification({
+                title: 'Регистрация выполнена',
+                description: 'Аккаунт успешно создан!',
+                color: 'success'
+            })
+
             return await login(userData)
         } catch (err) {
             error.value = err instanceof Error ? err.message : 'Registration failed'
+
+            handleSystemNotification({
+                title: 'Ошибка регистрации',
+                description: error.value || 'Произошла ошибка при регистрации',
+                color: 'error'
+            })
+
             return { success: false, error: error.value }
         } finally {
             isLoading.value = false
