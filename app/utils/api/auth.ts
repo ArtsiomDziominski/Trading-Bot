@@ -37,10 +37,8 @@ export class AuthApi extends BaseApiClient {
     })
   }
 
-  async getCurrentUser(token: string): Promise<User> {
-    return this.request<User>('/auth/me', {
-      headers: this.getAuthHeaders(token),
-    })
+  async getCurrentUser(): Promise<User> {
+    return this.request<User>('/auth/me')
   }
 
   async changePassword(token: string, data: {
@@ -49,7 +47,6 @@ export class AuthApi extends BaseApiClient {
   }): Promise<User> {
     return this.request<User>('/auth/password', {
       method: 'PUT',
-      headers: this.getAuthHeaders(token),
       body: JSON.stringify(data),
     })
   }

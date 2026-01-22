@@ -32,6 +32,7 @@ export class BaseApiClient {
       headers: {
         'Content-Type': 'application/json',
         ...options.headers,
+        ...this.getAuthHeaders()
       },
       ...options,
     }
@@ -50,11 +51,12 @@ export class BaseApiClient {
     return response.json()
   }
 
-  protected getAuthHeaders(token?: string): Record<string, string> {
+  protected getAuthHeaders(): Record<string, string> {
     const headers: Record<string, string> = {}
+    const token = useState<string | null>('auth-token', () => null)
 
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`
+    if (token.value) {
+      headers['Authorization'] = `Bearer ${token.value}`
     }
 
     return headers

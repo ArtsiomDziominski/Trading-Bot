@@ -4,6 +4,7 @@
 .nitro
 .cache
 dist
+.idea
 
 node_modules
 
